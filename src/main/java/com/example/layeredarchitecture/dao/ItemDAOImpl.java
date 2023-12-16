@@ -41,4 +41,33 @@ public class ItemDAOImpl {
         pstm.setInt(4, itemDTO.getQtyOnHand());
         return pstm.executeUpdate() > 0;
     }
+
+    public boolean updateItem(ItemDTO itemDTO) throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getDbConnection().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("UPDATE Item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?");
+        pstm.setString(1, itemDTO.getDescription());
+        pstm.setBigDecimal(2, itemDTO.getUnitPrice());
+        pstm.setInt(3, itemDTO.getQtyOnHand());
+        pstm.setString(4, itemDTO.getCode());
+        return pstm.executeUpdate() > 0;
+    }
+
+    public boolean existItem(String code) throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getDbConnection().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT code FROM Item WHERE code=?");
+        pstm.setString(1, code);
+        return pstm.executeQuery().next();
+    }
+
+    public String generateNewId() throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getDbConnection().getConnection();
+        ResultSet rst = connection.createStatement().executeQuery("SELECT code FROM Item ORDER BY code DESC LIMIT 1;");
+        if (rst.next()) {
+            String id = rst.getString("code");
+            int newItemId = Integer.parseInt(id.replace("I00-", "")) + 1;
+            return String.format("I00-%03d", newItemId);
+        } else {
+            return "I00-001";
+        }
+    }
 }

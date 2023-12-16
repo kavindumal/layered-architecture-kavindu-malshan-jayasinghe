@@ -10,15 +10,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface PlaceOrderDAO {
-    boolean existItem(String code) throws SQLException, ClassNotFoundException;
-
-    boolean existCustomer(String id) throws SQLException, ClassNotFoundException;
 
     String generateNewId() throws SQLException, ClassNotFoundException;
-
-    ItemDTO findItem(String code) throws SQLException, ClassNotFoundException;
-
-    CustomerDTO findCustomer(String newValue) throws SQLException, ClassNotFoundException;
 
     boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) throws SQLException, ClassNotFoundException;
 }

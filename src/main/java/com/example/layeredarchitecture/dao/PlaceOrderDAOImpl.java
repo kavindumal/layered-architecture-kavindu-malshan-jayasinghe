@@ -9,7 +9,8 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.List;
 
-public class PlaceOrderDAOImpl {
+public class PlaceOrderDAOImpl implements PlaceOrderDAO {
+    @Override
     public boolean existItem(String code) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("SELECT code FROM Item WHERE code=?");
@@ -17,6 +18,7 @@ public class PlaceOrderDAOImpl {
         return pstm.executeQuery().next();
     }
 
+    @Override
     public boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("SELECT id FROM Customer WHERE id=?");
@@ -24,6 +26,7 @@ public class PlaceOrderDAOImpl {
         return pstm.executeQuery().next();
     }
 
+    @Override
     public String generateNewId() throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         Statement stm = connection.createStatement();
@@ -32,6 +35,7 @@ public class PlaceOrderDAOImpl {
         return rst.next() ? String.format("OID-%03d", (Integer.parseInt(rst.getString("oid").replace("OID-", "")) + 1)) : "OID-001";
     }
 
+    @Override
     public ItemDTO findItem(String code) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Item WHERE code=?");
@@ -40,6 +44,8 @@ public class PlaceOrderDAOImpl {
         rst.next();
         return new ItemDTO(code, rst.getString("description"), rst.getBigDecimal("unitPrice"), rst.getInt("qtyOnHand"));
     }
+
+    @Override
     public CustomerDTO findCustomer(String newValue) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Customer WHERE id=?");
@@ -49,6 +55,7 @@ public class PlaceOrderDAOImpl {
         return new CustomerDTO(newValue + "", rst.getString("name"), rst.getString("address"));
     }
 
+    @Override
     public boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) throws SQLException, ClassNotFoundException {
         Connection connection = null;
         try {

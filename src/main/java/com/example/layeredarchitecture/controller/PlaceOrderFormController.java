@@ -184,7 +184,6 @@ public class PlaceOrderFormController {
     }
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-
         return placeOrderDAO.existCustomer(id);
     }
 

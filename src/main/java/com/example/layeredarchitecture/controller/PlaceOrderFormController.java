@@ -47,9 +47,9 @@ public class PlaceOrderFormController {
     public Label lblDate;
     public Label lblTotal;
     private String orderId;
-    CustomerBO customerBO = new CustomerBOImpl();
-    ItemBO itemBO = new ItemBOImpl();
-    PlaceOrderBO placeOrderBO = new PlaceOrderBOImpl();
+    CustomerBO customerBO = (CustomerBO) BOFactory.getBOFactory().getBO(BOFactory.BOType.CUSTOMER);
+    ItemBO itemBO = (ItemBO) BOFactory.getBOFactory().getBO(BOFactory.BOType.ITEM);
+    PlaceOrderBO placeOrderBO = (PlaceOrderBO) BOFactory.getBOFactory().getBO(BOFactory.BOType.PLACE_ORDER);
     public void initialize() throws SQLException, ClassNotFoundException {
 
         tblOrderDetails.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));

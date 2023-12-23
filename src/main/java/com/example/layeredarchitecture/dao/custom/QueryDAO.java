@@ -1,7 +1,7 @@
 package com.example.layeredarchitecture.dao.custom;
 
-import com.example.layeredarchitecture.model.CustomerDTO;
+import com.example.layeredarchitecture.model.OrderDTO;
 
 public interface QueryDAO {
-    void customerOrderDetails(CustomerDTO customerDTO);
+    void orderDetails(OrderDTO dto);
 }

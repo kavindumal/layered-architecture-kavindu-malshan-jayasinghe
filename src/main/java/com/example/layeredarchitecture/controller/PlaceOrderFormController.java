@@ -3,9 +3,7 @@ package com.example.layeredarchitecture.controller;
 import com.example.layeredarchitecture.bo.*;
 import com.example.layeredarchitecture.model.CustomerDTO;
 import com.example.layeredarchitecture.model.ItemDTO;
-import com.example.layeredarchitecture.model.OrderDTO;
 import com.example.layeredarchitecture.model.OrderDetailDTO;
-import com.example.layeredarchitecture.dao.TransactionUtil;
 import com.example.layeredarchitecture.view.tdm.OrderDetailTM;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -318,7 +316,7 @@ public class PlaceOrderFormController {
     public boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) {
         /*Transaction*/
         try {
-            return placeOrderBO.saveOrder(orderId,orderDate,customerId,orderDetails);
+            return placeOrderBO.placeOrder(orderId,orderDate,customerId,orderDetails);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {

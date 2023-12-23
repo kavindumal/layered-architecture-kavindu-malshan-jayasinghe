@@ -18,7 +18,7 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
     OrderDetailDAO orderDetailDAO = new OrderDetailDAOImpl();
     ItemBO itemBO = new ItemBOImpl();
     @Override
-    public boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) throws SQLException, ClassNotFoundException {
+    public boolean placeOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) throws SQLException, ClassNotFoundException {
         TransactionUtil.startTransaction();
 
         boolean isExists = isExists(orderId);
@@ -27,7 +27,7 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
 
         }
 
-        boolean isSaved = saveOrder(new OrderDTO(orderId, orderDate, customerId));
+        boolean isSaved = placeOrder(new OrderDTO(orderId, orderDate, customerId));
 
         if (!isSaved) {
             TransactionUtil.rollBack();
@@ -82,7 +82,7 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
     }
 
     @Override
-    public boolean saveOrder(OrderDTO dto) throws SQLException, ClassNotFoundException {
+    public boolean placeOrder(OrderDTO dto) throws SQLException, ClassNotFoundException {
         return ordersDAO.saveOrder(dto);
     }
 }

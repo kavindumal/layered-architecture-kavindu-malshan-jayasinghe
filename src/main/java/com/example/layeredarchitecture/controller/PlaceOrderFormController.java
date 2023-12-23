@@ -1,5 +1,7 @@
 package com.example.layeredarchitecture.controller;
 
+import com.example.layeredarchitecture.bo.PlaceOrderBO;
+import com.example.layeredarchitecture.bo.PlaceOrderBOImpl;
 import com.example.layeredarchitecture.dao.custom.CustomerDAO;
 import com.example.layeredarchitecture.dao.custom.ItemDAO;
 import com.example.layeredarchitecture.dao.custom.OrderDetailDAO;
@@ -58,9 +60,7 @@ public class PlaceOrderFormController {
     private String orderId;
     CustomerDAO customerDAO = new CustomerDAOImpl();
     ItemDAO itemDAO = new ItemDAOImpl();
-    OrdersDAO ordersDAO = new OrdersDAOImpl();
-    OrderDetailDAO orderDetailDAO = new OrderDetailDAOImpl();
-
+    PlaceOrderBO placeOrderBO = new PlaceOrderBOImpl();
     public void initialize() throws SQLException, ClassNotFoundException {
 
         tblOrderDetails.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -194,7 +194,7 @@ public class PlaceOrderFormController {
 
     public String generateNewOrderId() {
         try {
-            String newId = ordersDAO.generateNextOrderId();
+            String newId = placeOrderBO.generateNextOrderId();
 
             if (newId != null) {
                 return String.format("OID-%03d", (Integer.parseInt(newId.replace("OID-", "")) + 1));
@@ -330,13 +330,13 @@ public class PlaceOrderFormController {
         try {
             TransactionUtil.startTransaction();
 
-            boolean isExists = ordersDAO.isExists(orderId);
+            boolean isExists = placeOrderBO.isExists(orderId);
             /*if order id already exist*/
             if (isExists) {
 
             }
 
-            boolean isSaved = ordersDAO.saveOrder(new OrderDTO(orderId, orderDate, customerId));
+            boolean isSaved = placeOrderBO.saveOrder(new OrderDTO(orderId, orderDate, customerId));
 
             if (!isSaved) {
                 TransactionUtil.rollBack();
@@ -345,7 +345,7 @@ public class PlaceOrderFormController {
 
             for (OrderDetailDTO detail : orderDetails) {
 
-                if (!orderDetailDAO.saveOrderDetail(orderId, detail)) {
+                if (!placeOrderBO.saveOrderDetail(orderId, detail)) {
                     TransactionUtil.rollBack();
                     return false;
                 }

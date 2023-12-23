@@ -317,57 +317,12 @@ public class PlaceOrderFormController {
 
     public boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) {
         /*Transaction*/
-
         try {
-            TransactionUtil.startTransaction();
-
-            boolean isExists = placeOrderBO.isExists(orderId);
-            /*if order id already exist*/
-            if (isExists) {
-
-            }
-
-            boolean isSaved = placeOrderBO.saveOrder(new OrderDTO(orderId, orderDate, customerId));
-
-            if (!isSaved) {
-                TransactionUtil.rollBack();
-                return false;
-            }
-
-            for (OrderDetailDTO detail : orderDetails) {
-
-                if (!placeOrderBO.saveOrderDetail(orderId, detail)) {
-                    TransactionUtil.rollBack();
-                    return false;
-                }
-
-//                //Search & Update Item
-                ItemDTO item = findItem(detail.getItemCode());
-                item.setQtyOnHand(item.getQtyOnHand() - detail.getQty());
-
-                if (!itemBO.updateItem(item)) {
-                    TransactionUtil.rollBack();
-                    return false;
-                }
-            }
-
-            TransactionUtil.endTransaction();
-            return true;
-
-        } catch (SQLException | ClassNotFoundException throwable) {
-            throwable.printStackTrace();
-        }
-        return false;
-    }
-
-    public ItemDTO findItem(String code) {
-        try {
-            return itemBO.searchItem(code);
+            return placeOrderBO.saveOrder(orderId,orderDate,customerId,orderDetails);
         } catch (SQLException e) {
-            throw new RuntimeException("Failed to find the Item " + code, e);
+            throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return null;
     }
 }

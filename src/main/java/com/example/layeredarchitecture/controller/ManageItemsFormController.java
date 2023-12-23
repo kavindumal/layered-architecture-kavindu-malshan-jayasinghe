@@ -2,7 +2,6 @@ package com.example.layeredarchitecture.controller;
 
 import com.example.layeredarchitecture.bo.ItemBO;
 import com.example.layeredarchitecture.bo.ItemBOImpl;
-import com.example.layeredarchitecture.dao.custom.ItemDAO;
 import com.example.layeredarchitecture.dao.custom.impl.ItemDAOImpl;
 import com.example.layeredarchitecture.model.ItemDTO;
 import com.example.layeredarchitecture.view.tdm.ItemTM;
@@ -73,7 +72,7 @@ public class ManageItemsFormController {
         try {
             /*Get all items*/
 
-            ArrayList<ItemDTO> allItem = itemBO.getAll();
+            ArrayList<ItemDTO> allItem = itemBO.getAllItem();
 
             for (ItemDTO dto : allItem) {
                 tblItems.getItems().add(
@@ -142,7 +141,7 @@ public class ManageItemsFormController {
                 new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
             }
 
-            boolean isDeleted = itemBO.delete( code );
+            boolean isDeleted = itemBO.deleteItem( code );
 
             if (isDeleted) {
                 tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
@@ -186,7 +185,7 @@ public class ManageItemsFormController {
                 }
                 //Save Item
 
-                boolean isSaved = itemBO.save( new ItemDTO( code, description, qtyOnHand, unitPrice) );
+                boolean isSaved = itemBO.saveItem( new ItemDTO( code, description, qtyOnHand, unitPrice) );
 
                 if (isSaved) {
                     tblItems.getItems().add(new ItemTM(code, description, qtyOnHand, unitPrice));
@@ -205,7 +204,7 @@ public class ManageItemsFormController {
                 }
                 /*Update Item*/
 
-                boolean isUpdated = itemBO.update( new ItemDTO( code, description, qtyOnHand, unitPrice) );
+                boolean isUpdated = itemBO.updateItem( new ItemDTO( code, description, qtyOnHand, unitPrice) );
 
                 if (isUpdated) {
                     ItemTM selectedItem = tblItems.getSelectionModel().getSelectedItem();
@@ -235,7 +234,7 @@ public class ManageItemsFormController {
     private String generateNewId() {
         try {
 
-            String lastId = itemBO.generateID();
+            String lastId = itemBO.generateIDItem();
 
             if (lastId != null) {
                 int newItemId = Integer.parseInt(lastId.replace("I00-", "")) + 1;

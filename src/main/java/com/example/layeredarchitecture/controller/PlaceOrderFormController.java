@@ -1,8 +1,6 @@
 package com.example.layeredarchitecture.controller;
 
 import com.example.layeredarchitecture.bo.*;
-import com.example.layeredarchitecture.dao.custom.CustomerDAO;
-import com.example.layeredarchitecture.dao.custom.impl.CustomerDAOImpl;
 import com.example.layeredarchitecture.model.CustomerDTO;
 import com.example.layeredarchitecture.model.ItemDTO;
 import com.example.layeredarchitecture.model.OrderDTO;
@@ -105,7 +103,7 @@ public class PlaceOrderFormController {
                             new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + newValue + "").show();
                         }
 
-                        CustomerDTO dto = customerBO.search(newValue);
+                        CustomerDTO dto = customerBO.searchCustomer(newValue);
 
                         if (dto != null) {
                             txtCustomerName.setText(dto.getName());
@@ -135,7 +133,7 @@ public class PlaceOrderFormController {
 //                        throw new NotFoundException("There is no such item associated with the id " + code);
                     }
 
-                    ItemDTO item = itemBO.search(newItemCode);
+                    ItemDTO item = itemBO.searchItem(newItemCode);
 
                     txtDescription.setText(item.getDescription());
                     txtUnitPrice.setText(item.getUnitPrice().setScale(2).toString());
@@ -178,11 +176,11 @@ public class PlaceOrderFormController {
     }
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        return itemBO.exist(code);
+        return itemBO.existItem(code);
     }
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-        return customerBO.exist(id);
+        return customerBO.existCustomer(id);
     }
 
     public String generateNewOrderId() {
@@ -204,7 +202,7 @@ public class PlaceOrderFormController {
 
     private void loadAllCustomerIds() {
         try {
-            ArrayList<CustomerDTO> allCustomers = customerBO.getAll();
+            ArrayList<CustomerDTO> allCustomers = customerBO.getAllCustomer();
 
             for (CustomerDTO dto : allCustomers) {
                 cmbCustomerId.getItems().add(dto.getId());
@@ -220,7 +218,7 @@ public class PlaceOrderFormController {
     private void loadAllItemCodes() {
         try {
             /*Get all items*/
-            ArrayList<ItemDTO> allItem = itemBO.getAll();
+            ArrayList<ItemDTO> allItem = itemBO.getAllItem();
 
             for (ItemDTO dto : allItem) {
                 cmbItemCode.getItems().add(dto.getCode());
@@ -347,7 +345,7 @@ public class PlaceOrderFormController {
                 ItemDTO item = findItem(detail.getItemCode());
                 item.setQtyOnHand(item.getQtyOnHand() - detail.getQty());
 
-                if (!itemBO.update(item)) {
+                if (!itemBO.updateItem(item)) {
                     TransactionUtil.rollBack();
                     return false;
                 }
@@ -364,7 +362,7 @@ public class PlaceOrderFormController {
 
     public ItemDTO findItem(String code) {
         try {
-            return itemBO.search(code);
+            return itemBO.searchItem(code);
         } catch (SQLException e) {
             throw new RuntimeException("Failed to find the Item " + code, e);
         } catch (ClassNotFoundException e) {

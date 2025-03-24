@@ -1,94 +1,65 @@
-# Layered Architecture Project
-
-Welcome to the Layered Architecture project! This project is developed for educational purposes, specifically to teach Layered Architecture concepts to students in the GDSE program at IJSE.
+# Vision Care Software
 
 ## Overview
 
-This project is designed to demonstrate the principles of layered architecture, a common architectural pattern used in software development. The project showcases the separation of concerns and modularity by dividing the application into distinct layers.
-
-## Table of Contents
-
-- [Features](#features)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Database Setup](#database-setup)
-  - [Installation](#installation)
-- [Project Structure](#project-structure)
-- [Usage](#usage)
-- [License](#license)
+Vision Care Software is a JavaFX-based application designed to assist optometrists and vision care professionals in managing patient prescriptions, generating lenses, and selecting suitable frames for patients. This software aims to reduce the risk of errors in prescriptions and ensure that patients receive the most appropriate eyewear.
 
 ## Features
 
-- **Layered Architecture:** The project follows a layered architecture pattern, emphasizing the separation of concerns.
-- **Educational Purpose:** Developed to help GDSE students understand and apply layered architecture concepts.
-- **Modularity:** Each layer is designed to be modular and independent, facilitating ease of maintenance and scalability.
+- **Prescription Management**: Easily input and manage patient prescriptions.
+- **Lens Generation**: Automatically generate lenses based on the given prescription to avoid mistakes.
+- **Frame Selection**: Provide recommendations for suitable frames for patients.
+- **User-Friendly Interface**: Intuitive and easy-to-use interface built with JavaFX.
+- **Error Reduction**: Minimize errors in prescriptions and lens generation.
+- **Layered Architecture**: Organized codebase with clear separation of concerns.
 
-## Getting Started
+## Installation
 
-### Prerequisites
+1. **Clone the repository**:
+    ```sh
+    git clone https://github.com/yourusername/vision-care-software.git
+    cd vision-care-software
+    ```
 
-Before you begin, ensure you have met the following requirements:
+2. **Build the project**:
+    Make sure you have JDK and JavaFX SDK installed. Then, build the project using your preferred method (e.g., Maven, Gradle, or an IDE like IntelliJ IDEA or Eclipse).
 
-- Java Development Kit 11 (JDK) installed.
-- Integrated Development Environment (IDE) like IntelliJ IDEA or Eclipse.
-- Git for version control.
-- MySQL or another relational database management system installed.
-
-### Database Setup
-
-1. **Create Database:**
-   Open your preferred MySQL client and execute the following SQL command to create the "company" database:
-
-   ```sql
-   CREATE DATABASE IF NOT EXISTS company;
-   ```
-
-2. **Run SQL Script:**
-   Locate the SQL file named `init_database.sql` in the `resources` folder. Run this script in your MySQL client to initialize the database with required tables and data.
-
-### Installation
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/udarasan/layered-architecture.git
-   ```
-
-2. Open the project in your IDE.
-3. Build and run the application.
-
-## Project Structure (Initial)
-
-```
-layered-architecture/
-|-- src/
-|   |-- main/
-|       |-- java/
-|           |-- com/
-|               |-- example/
-|                   |-- layeredarchitecture/
-|                       |-- controller/      
-|                       |-- db/    
-|                       |-- view/         
-|                       |-- model/               
-|-- resources/
-|   |-- company-db.sql                        # SQL script to initialize the "company" database
-|-- README.md
-|-- .gitignore
-|-- LICENSE
-|-- ...
-```
+3. **Run the application**:
+    ```sh
+    java --module-path /path/to/javafx-sdk/lib --add-modules javafx.controls,javafx.fxml -jar vision-care-software.jar
+    ```
 
 ## Usage
 
-To run the project, follow these steps:
+1. **Launch the application**.
+2. **Add a new patient**: Enter patient details and prescription information.
+3. **Generate lenses**: The software will automatically generate lenses based on the prescription.
+4. **Select frames**: Get recommendations for suitable frames based on the patient's preferences and prescription.
+5. **Save and manage records**: Keep track of patient records and prescriptions.
 
-1. Open the project in your IDE.
-2. Build and run the application.
+## Project Structure
 
-For detailed usage instructions or examples, refer to the documentation provided in each layer's package.
+The project follows a layered architecture to ensure a clear separation of concerns:
 
+- **UI Layer**: Contains JavaFX components and controllers for the user interface.
+- **Service Layer**: Includes business logic and services for managing prescriptions, lenses, and frames.
+- **Repository Layer**: Handles data persistence and retrieval.
+- **Model Layer**: Defines data models and entities used throughout the application.
+
+## Contributing
+
+Contributions are welcome! Please follow these steps to contribute:
+
+1. Fork the repository.
+2. Create a new branch: `git checkout -b feature/your-feature`
+3. Make your changes and commit them: `git commit -m 'Add some feature'`
+4. Push to the branch: `git push origin feature/your-feature`
+5. Submit a pull request.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+For questions or suggestions, please open an issue or contact [yourname](mailto:yourname@example.com).
